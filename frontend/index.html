@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Study Duel &middot; HTML, CSS and JavaScript, head to head</title>
+<meta name="description" content="Two players, three languages, one daily recall duel. Mnemonic stories from the valley, spaced repetition underneath, a winner per language every day." />
+<link rel="stylesheet" href="css/app.css" />
+</head>
+<body class="ground">
+
+<div id="nav"></div>
+
+<main class="wrap" style="padding-top:40px;padding-bottom:60px">
+
+  <section class="grid cols-2" style="align-items:start;gap:28px">
+    <div class="stack rise">
+      <p class="small muted" style="letter-spacing:.18em;text-transform:uppercase;font-family:var(--font-display);margin:0">
+        A two-player field journal
+      </p>
+      <h1 style="margin-top:8px">Two farmers, three languages, one duel a day.</h1>
+      <p class="muted" style="font-size:1.08rem;max-width:52ch">
+        You each get the <b>identical</b> card set for HTML, CSS and JavaScript, and you play it
+        whenever suits you. At the end of the day a winner is declared for each language.
+        Underneath sits real spaced repetition and a story for every rule that keeps slipping.
+      </p>
+
+      <div class="panel tight" style="background:var(--surface-2)">
+        <p class="small" style="margin:0">
+          <b>Why the same cards?</b> Fairness. Both sets come from the same
+          <span class="code">sha256(date + language)</span> seed, so neither of you can play a
+          kinder deck than the other.
+        </p>
+      </div>
+
+      <div class="row">
+        <a class="btn primary" href="play.html">Play today</a>
+        <a class="btn" href="storybook.html">Read the storybook</a>
+      </div>
+      <p class="small muted" style="margin:0">The storybook is open to anyone. Playing needs a sign-in.</p>
+    </div>
+
+    <div class="panel stack rise">
+      <div id="signedOut">
+        <h3 style="margin:0 0 4px">Sign in</h3>
+        <p class="small muted">Only the two players named in the API's <span class="code">USERS</span> setting can get in. There is no public signup, by design.</p>
+        <form id="loginForm" class="stack" style="margin-top:14px">
+          <div>
+            <label for="name">Your name</label>
+            <input id="name" type="text" autocomplete="username" placeholder="farmerB" required />
+          </div>
+          <div>
+            <label for="passcode">Passcode</label>
+            <input id="passcode" type="password" autocomplete="current-password" required />
+          </div>
+          <button class="btn primary" id="signInBtn" type="submit">Sign in</button>
+        </form>
+      </div>
+
+      <div id="signedIn" class="hidden stack">
+        <h3 style="margin:0">Signed in as <span id="whoami"></span></h3>
+        <p class="muted small">Head to Today to play your three sets.</p>
+        <div class="row">
+          <a class="btn primary" href="play.html">Play today</a>
+          <a class="btn" href="progress.html">Standings</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel stack rise" style="margin-top:26px">
+    <h3 style="margin:0">Where the API lives</h3>
+    <p class="small muted">
+      Current: <span class="code" id="apiShown"></span>
+      <br />
+      Paste your Render service URL here and it is remembered in this browser, so you can
+      point the deployed site at the API without editing code. Leave it empty to fall back to
+      the built-in default.
+    </p>
+    <div class="row">
+      <input id="apiInput" type="text" style="flex:1;min-width:260px" placeholder="https://your-service.onrender.com" />
+      <button class="btn" id="apiSave">Save</button>
+    </div>
+  </section>
+
+  <section style="margin-top:34px">
+    <h3>How a day works</h3>
+    <div class="grid cols-3" style="margin-top:12px">
+      <div class="panel stack">
+        <span class="badge">1 &middot; The set</span>
+        <p style="margin:0"><b>20 cards per language.</b> Same cards, same order, both of you.</p>
+        <p class="small muted" style="margin:0">Drawn from everything you have unlocked so far, so the deck keeps moving.</p>
+      </div>
+      <div class="panel stack">
+        <span class="badge">2 &middot; The recall</span>
+        <p style="margin:0"><b>You type the answer.</b> No multiple choice, one retry.</p>
+        <p class="small muted" style="margin:0">100 first try, 60 after a retry, 30 with the hint, 0 for a miss. The attempt count lives on the server.</p>
+      </div>
+      <div class="panel stack">
+        <span class="badge">3 &middot; The settle</span>
+        <p style="margin:0"><b>A winner per language, every day.</b></p>
+        <p class="small muted" style="margin:0">Missed a card? The story that explains it opens right at the paragraph you needed.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script type="module" src="js/home.js"></script>
+</body>
+</html>
