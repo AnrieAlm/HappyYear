@@ -1,0 +1,80 @@
+/* ===========================================================================
+   Study Duel -- design tokens
+   Carried over from the Raccoon Stories site so the storybook and the game
+   are one product, then extended with a day theme and language hues.
+
+   Two rules this file exists to enforce:
+     1. No pure #fff and no pure #000 -- both cause halation on long reads.
+        Body contrast sits around 12-14:1, deliberately not 21:1.
+     2. The three language hues share saturation and lightness, so they are
+        distinguishable without any of them shouting. Amber stays the single
+        UI accent; language colours only ever tint a badge or a rule.
+   =========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&family=Nunito:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
+
+:root {
+  --radius-field: 6px;
+  --radius-panel: 14px;
+
+  --font-display: "Pixelify Sans", "Courier New", ui-monospace, monospace;
+  --font-body: "Nunito", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-code: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.5rem;
+  --step-3: 2rem;
+  --step-4: 2.6rem;
+}
+
+/* --- night: the storybook's existing identity, unchanged ------------------ */
+[data-theme="night"] {
+  --bg: #0e1a13;
+  --surface: #152219;
+  --surface-2: #1c2b21;
+  --line: #2a3a2e;
+  --text: #efe7d6;          /* bone, ~14:1 */
+  --text-muted: #a9b6a6;    /* sage, ~6:1  */
+  --accent: #e2a33c;        /* amber -- buttons, focus, streak */
+  --accent-ink: #17210f;
+
+  --lang-html: #e2a33c;     /* unchanged from the storybook */
+  --lang-css: #6f9c53;      /* unchanged from the storybook */
+  --lang-js: #5c8095;       /* was `bone`, which is the body text colour and
+                               would vanish in day mode -- the one real fix */
+
+  --ok: #6f9c53;
+  --hint: #e2a33c;
+  --lapse: #b5654f;         /* dusty clay, never fire red */
+
+  --shadow: 0 1px 0 rgba(239, 231, 214, 0.04), 0 14px 32px rgba(0, 0, 0, 0.35);
+  --glow-a: rgba(111, 156, 83, 0.10);
+  --glow-b: rgba(226, 163, 60, 0.08);
+  color-scheme: dark;
+}
+
+/* --- day: calm paper, for drilling in daylight ---------------------------- */
+[data-theme="day"] {
+  --bg: #f4efe3;
+  --surface: #fbf7ee;
+  --surface-2: #efe8d9;
+  --line: #dcd2be;
+  --text: #241f19;          /* warm charcoal, ~13:1 -- not #000 */
+  --text-muted: #6b6155;
+  --accent: #8a5f14;        /* amber darkened to hold on light */
+  --accent-ink: #fdf9f0;
+
+  --lang-html: #9b5426;
+  --lang-css: #4a7038;
+  --lang-js: #3d6579;
+
+  --ok: #4a7038;
+  --hint: #8a5f14;
+  --lapse: #8e4432;
+
+  --shadow: 0 1px 0 rgba(36, 31, 25, 0.03), 0 10px 24px rgba(36, 31, 25, 0.08);
+  --glow-a: rgba(111, 156, 83, 0.06);
+  --glow-b: rgba(226, 163, 60, 0.06);
+  color-scheme: light;
+}

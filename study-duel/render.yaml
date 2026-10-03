@@ -1,0 +1,64 @@
+# Render Blueprint. Push the repo, then in Render choose
+# "New +" -> "Blueprint" and point it at this repository.
+#
+# Note on MongoDB: Render does NOT offer a managed MongoDB. The two real
+# options are (a) MongoDB Atlas free tier, which is what the MONGO_URI env var
+# below expects, or (b) the self-hosted Docker service commented out at the
+# bottom. Atlas is less work and comes with backups; the Docker route needs a
+# paid instance because of the persistent disk.
+
+services:
+  - type: web
+    name: study-duel-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      # Paste your Atlas connection string (sync: false = set it in the dashboard).
+      - key: MONGO_URI
+        sync: false
+      - key: MONGO_DB
+        value: study_duel
+      # Render generates and stores a strong signing key for you.
+      - key: JWT_SECRET
+        generateValue: true
+      # The only two people who can sign in. JSON: {"name":"passcode"}
+      - key: USERS
+        sync: false
+      # Your GitHub Pages origin, e.g. https://yourname.github.io
+      # Comma separated for several. "*" also works but is looser.
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: DAY_TZ
+        value: Asia/Kolkata
+      - key: DAILY_SIZE
+        value: "20"
+      - key: REVIEW_SIZE
+        value: "10"
+      - key: PYTHON_VERSION
+        value: 3.11.2
+
+# --- Option (b): MongoDB running on Render itself ---------------------------
+# Uncomment to self-host. Requires a paid instance type because of the disk,
+# and you own backups. Then set MONGO_URI to the private service address, e.g.
+# mongodb://study-duel-db:27017
+#
+#  - type: pserv
+#    name: study-duel-db
+#    runtime: docker
+#    plan: starter
+#    dockerfilePath: ./backend/mongo/Dockerfile
+#    dockerContext: ./backend/mongo
+#    disk:
+#      name: mongo-data
+#      mountPath: /data/db
+#      sizeGB: 5
+#    envVars:
+#      - key: MONGO_INITDB_ROOT_USERNAME
+#        sync: false
+#      - key: MONGO_INITDB_ROOT_PASSWORD
+#        sync: false
